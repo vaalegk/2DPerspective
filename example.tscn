@@ -1,0 +1,238 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://example.gd" type="Script" id=1]
+[ext_resource path="res://addons/p2d_perspective/p2d_perspective_node.gd" type="Script" id=2]
+[ext_resource path="res://addons/p2d_perspective/p2d_icon.png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://assets/moving_platform.png" type="Texture" id=5]
+[ext_resource path="res://assets/moving_platform_box.png" type="Texture" id=6]
+[ext_resource path="res://assets/moving_platform_box_top.png" type="Texture" id=7]
+
+[node name="example" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="P2DPerspectiveNode" type="Node2D" parent="."]
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 ),
+"p2d_canvas": true,
+"p2d_canvas_mode": "clone"
+}
+ProjectionDistance = 15
+ProjectionDistanceStep = 4
+ProjectionMode = "clone"
+ShowProjectionLines = true
+
+[node name="icon" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 70, 470 )
+texture = ExtResource( 4 )
+__meta__ = {
+"boxes_side_bottom": true,
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="icon2" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 170, 298.586 )
+texture = ExtResource( 4 )
+__meta__ = {
+"boxes_side_bottom": true,
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="moving_platform" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 1020, 540 )
+scale = Vector2( 1.37982, 2.64258 )
+texture = ExtResource( 5 )
+__meta__ = {
+"p2d_canvas_mode": "clone",
+"p2d_mode": "clone"
+}
+
+[node name="moving_platform4" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 1278.08, 490 )
+scale = Vector2( 1.46311, 3.80952 )
+texture = ExtResource( 5 )
+__meta__ = {
+"p2d_canvas_mode": "clone",
+"p2d_mode": "clone"
+}
+
+[node name="moving_platform5" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 1278.08, 490 )
+scale = Vector2( 1.46311, 3.80952 )
+texture = ExtResource( 5 )
+__meta__ = {
+"p2d_canvas_mode": "clone",
+"p2d_mode": "clone"
+}
+
+[node name="moving_platform2" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 370, 660 )
+scale = Vector2( 1.03261, 2.46429 )
+texture = ExtResource( 6 )
+__meta__ = {
+"boxes_side_bottom": false,
+"boxes_side_left": false,
+"boxes_side_right": false,
+"boxes_side_top": true,
+"boxes_texture_top": ExtResource( 7 ),
+"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="moving_platform6" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( -80, 490 )
+scale = Vector2( 1.03261, 2.46429 )
+texture = ExtResource( 6 )
+__meta__ = {
+"boxes_side_bottom": false,
+"boxes_side_left": true,
+"boxes_side_right": true,
+"boxes_side_top": true,
+"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="moving_platform3" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 565, 659 )
+scale = Vector2( 1.03261, 2.46429 )
+texture = ExtResource( 6 )
+__meta__ = {
+"boxes_side_bottom": false,
+"boxes_side_left": false,
+"boxes_side_right": false,
+"boxes_side_top": true,
+"boxes_texture_top": ExtResource( 7 ),
+"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="moving_platform7" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 770, 660 )
+scale = Vector2( 1.03261, 2.46429 )
+texture = ExtResource( 6 )
+__meta__ = {
+"boxes_side_bottom": false,
+"boxes_side_left": false,
+"boxes_side_right": false,
+"boxes_side_top": true,
+"boxes_texture_top": ExtResource( 7 ),
+"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="test" type="Node2D" parent="P2DPerspectiveNode"]
+position = Vector2( 1360, 90 )
+__meta__ = {
+"p2d_canvas_mode": "clone"
+}
+
+[node name="second_level_sprite" type="Sprite" parent="P2DPerspectiveNode/test"]
+position = Vector2( 330, 198 )
+texture = ExtResource( 4 )
+__meta__ = {
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="test2" type="Node2D" parent="P2DPerspectiveNode/test/second_level_sprite"]
+position = Vector2( -430, -220 )
+__meta__ = {
+"p2d_canvas_mode": "clone"
+}
+
+[node name="deeper_level_sprite" type="Sprite" parent="P2DPerspectiveNode/test/second_level_sprite/test2"]
+position = Vector2( 490, 290 )
+texture = ExtResource( 4 )
+__meta__ = {
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="test3" type="Node2D" parent="P2DPerspectiveNode/test/second_level_sprite/test2/deeper_level_sprite"]
+position = Vector2( -490, -290 )
+__meta__ = {
+"p2d_canvas_mode": "clone"
+}
+
+[node name="even_deeper_level_sprite" type="Sprite" parent="P2DPerspectiveNode/test/second_level_sprite/test2/deeper_level_sprite/test3"]
+position = Vector2( 330, 502 )
+texture = ExtResource( 4 )
+__meta__ = {
+"p2d_canvas_mode": "clone",
+"p2d_mode": "boxes"
+}
+
+[node name="icon3" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 720, 340.376 )
+texture = ExtResource( 4 )
+__meta__ = {
+"p2d_canvas_mode": "clone",
+"p2d_mode": "none"
+}
+
+[node name="camera" type="Camera2D" parent="."]
+position = Vector2( -20.9943, 298.586 )
+current = true
+smoothing_enabled = true
+
+[node name="lbl_label1" type="Label" parent="."]
+margin_left = -110.0
+margin_top = 309.376
+margin_right = 74.0
+margin_bottom = 323.376
+text = "Box Projection, default so far
+Not suitable for all sprites"
+
+[node name="lbl_label2" type="Label" parent="."]
+margin_left = 370.0
+margin_top = 330.586
+margin_right = 613.0
+margin_bottom = 412.586
+text = "Box Projection, 
+You can overwrite the 
+top and bottom 
+to make them look better
+and also turn off some faces
+look at the gap bellow,
+ if we are not gonna see it why draw it?"
+
+[node name="lbl_label3" type="Label" parent="."]
+margin_left = 880.0
+margin_top = 210.0
+margin_right = 1127.0
+margin_bottom = 326.0
+text = "Clone projection
+It looks better on with some sprites. can be changed in the inspector"
+
+[node name="lbl_label4" type="Label" parent="."]
+margin_left = 1640.0
+margin_top = 180.0
+margin_right = 2082.0
+margin_bottom = 296.0
+text = "Deeply nested sprites"
+
+[node name="lbl_label5" type="Label" parent="."]
+margin_left = 630.0
+margin_top = 290.0
+margin_right = 820.0
+margin_bottom = 304.0
+text = "Specific excluded sprite"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+editor/display_folded = true
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_left = 10.0
+margin_top = 14.0
+margin_right = 50.0
+margin_bottom = 28.0
+text = "Move with arrow keys
+Space to toggle perspective lines
+Hold L-Control to move Vanishing Point instead"
