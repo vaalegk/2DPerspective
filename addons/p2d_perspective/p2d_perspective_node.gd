@@ -50,7 +50,7 @@ func scene_tree_listener(node,action):
 	if action=="add" && node.is_class("Sprite"):
 		propagate_call("add_to_group",["p2d_canvas_child"])
 		propagate_call("set_meta",["p2d_canvas_mode",ProjectionMode])
-		propagate_call("set_meta",["p2d_canvas_name",get_path()])
+		propagate_call("set_meta",["p2d_canvas_name",get_name()])
 		update_childs=true
 	if action=="remove" && node.is_in_group("p2d_canvas_child"):
 		update_childs=true 
@@ -99,19 +99,26 @@ func _draw():
 	
 		if cc.has_meta("p2d_mode"):
 			final_group=str("mode_",cc.get_meta("p2d_mode"))
+			
+		var child_rect_struct=get_child_rect(cc,child_rect,cc.get_rotation(),center)
+		var child_top=Vector2(child_rect_struct["min_x"],child_rect_struct["min_y"])
+		var child_bottom=Vector2(child_rect_struct["max_x"],child_rect_struct["max_y"])
 		
-		#skip, not in view, not visible, not in excluded group
-		if crect.intersects(child_rect)==false || !cc.is_visible() || final_group=="mode_none":
+		var child_rect_view=Rect2(child_top,child_bottom-child_top)
+		#skip, not in view, not visible, in excluded group
+		if crect.intersects(child_rect_view)==false || !cc.is_visible() || final_group=="mode_none":
 			continue  #next 
-		
-		in_view.append({"sprite":cc,"center":rect_center,"rect":child_rect,"group":final_group.to_lower(),"view_center":center})
+				
+		in_view.append({"sprite":cc,"center":rect_center,"rect":child_rect_struct,"group":final_group.to_lower(),"view_center":center})
 	
 	#kindda sort stuff to avoid see-though artifacts, if you need actual pixel perfect projections with zbuffers use 3d dude WTH haha! 
 	in_view.sort_custom(self,"sort_drawables")
 		
 	for cc in in_view:
+		if ShowProjectionLines:
+			draw_elements.append({"func":"draw_projection_lines","params":[[cc["rect"]["p1"],cc["rect"]["p2"],cc["rect"]["p3"],cc["rect"]["p4"]],center,0.5]})
 		self.call(cc["group"],cc["sprite"],cc["rect"],center)
-		
+	
 	if draw_elements.size()>0:
 		for d in draw_elements:
 			callv(d["func"],d["params"])
@@ -132,7 +139,7 @@ func sort_drawables(A,B):
 			return true
 	return ret
 
-func get_child_rect(child,child_rect,rot):
+func get_child_rect(child,child_rect,rot,center):
 	var rect_p1=child_rect.position
 	var rect_p2=Vector2(child_rect.end.x,child_rect.position.y)
 	var rect_p3=child_rect.end
@@ -149,25 +156,51 @@ func get_child_rect(child,child_rect,rot):
 		rect_p3=transform.xform(rect_p3)+center_diff
 		rect_p4=transform.xform(rect_p4)+center_diff
 	
-	return {
+	#apply parent transforms too if any
+	var relative_path=NodePath(str(child.get_path()).replace(child.get_meta("p2d_canvas_name"),""))	
+	if relative_path.get_name_count()>1:
+		var curr_parent=child.get_meta("p2d_canvas_name")
+		var parent_offset=Vector2(0,0)
+		for p in range(0,relative_path.get_name_count()-1):
+			curr_parent=str(curr_parent,"/",relative_path.get_name(p))
+			var parent=get_node(curr_parent)
+			if parent.has_method("get_position"):
+				parent_offset+=parent.get_position()
+		rect_p1+=parent_offset
+		rect_p2+=parent_offset
+		rect_p3+=parent_offset
+		rect_p4+=parent_offset
+		rect_center+=parent_offset
+	var result={
 		"p1":rect_p1,
 		"p2":rect_p2,
 		"p3":rect_p3,
 		"p4":rect_p4,
-		"center":rect_center
+		"center":rect_center,
+		"min_x":[rect_p1.x,rect_p2.x,rect_p3.x,rect_p4.x].min(),
+		"max_x":[rect_p1.x,rect_p2.x,rect_p3.x,rect_p4.x].max(),
+		"min_y":[rect_p1.y,rect_p2.y,rect_p3.y,rect_p4.y].min(),
+		"max_y":[rect_p1.y,rect_p2.y,rect_p3.y,rect_p4.y].max()
 	}
+	for i in range(1,4):
+		result["min_x"]=min(result["min_x"],result[str("p",i)].linear_interpolate(center,float(ProjectionDistance)/100).x)
+		result["min_y"]=min(result["min_y"],result[str("p",i)].linear_interpolate(center,float(ProjectionDistance)/100).y)
+		result["max_x"]=max(result["max_x"],result[str("p",i)].linear_interpolate(center,float(ProjectionDistance)/100).x)
+		result["max_y"]=max(result["max_y"],result[str("p",i)].linear_interpolate(center,float(ProjectionDistance)/100).y)
+		
+	return result
 
 #box drawing function used for "boxes" projection mode
-func mode_boxes(sp,child_rect,center):	
+func mode_boxes(sp,rect,center):	
 	var pols=[]
 	var to_draw=[]
-	var rect=get_child_rect(sp,child_rect,sp.get_rotation())
+#	var rect=get_child_rect(sp,child_rect,sp.get_rotation())
 
 	if rect["p1"].y<center.y:
-		if rect["p2"].x<center.x && sp.__meta__.get("boxes_side_right",true) :
-			to_draw.append(3)
 		if sp.__meta__.get("boxes_side_left",true):
 			to_draw.append(2)
+		if rect["p2"].x<center.x && sp.__meta__.get("boxes_side_right",true) :
+			to_draw.append(3)		
 		if rect["p3"].y<center.y && sp.__meta__.get("boxes_side_bottom",true) :
 			to_draw.append(1)
 	else:
@@ -201,12 +234,11 @@ func mode_boxes(sp,child_rect,center):
 
 	for p in to_draw:
 		draw_elements.append({"func":"draw_polygon","params":[pols[p],[],[Vector2(0,0),Vector2(1,0),Vector2(1,1),Vector2(0,1)],textures[p],null,true]})
-		if ShowProjectionLines:
-			draw_elements.append({"func":"draw_projection_lines","params":[[rect["p1"],rect["p2"],rect["p3"],rect["p4"]],center,0.5]})	
+		
 
-func mode_clone(sp,child_rect,center):	
+func mode_clone(sp,rect,center):	
 	var rot=sp.get_rotation()
-	var rect=get_child_rect(sp,child_rect,rot)
+	#var rect=get_child_rect(sp,child_rect,rot)
 
 	if rot!=0:
 		for dc in range(0,ProjectionDistance,ProjectionDistanceStep):
@@ -216,6 +248,3 @@ func mode_clone(sp,child_rect,center):
 		for dc in range(0,ProjectionDistance,ProjectionDistanceStep):
 			var dc_range=(float(ProjectionDistance)/100)-(float(dc)/100)
 			draw_elements.append({"func":"draw_texture_rect","params":[sp.get_texture(),Rect2(rect["p1"].linear_interpolate(center,dc_range),rect["p3"].linear_interpolate(center,dc_range)-rect["p1"].linear_interpolate(center,dc_range)),false]})
-		
-	if ShowProjectionLines:
-		draw_elements.append({"func":"draw_projection_lines","params":[[rect["p1"],rect["p2"],rect["p3"],rect["p4"]],center,0.5]})

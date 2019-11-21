@@ -16,12 +16,13 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 ),
 "p2d_canvas": true,
-"p2d_canvas_mode": "clone"
+"p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode")
 }
 ProjectionDistance = 15
 ProjectionDistanceStep = 4
 ProjectionMode = "clone"
-ShowProjectionLines = true
+ProjectionLineColor = Color( 0, 1, 1, 0.196078 )
 
 [node name="icon" type="Sprite" parent="P2DPerspectiveNode"]
 position = Vector2( 70, 470 )
@@ -29,6 +30,7 @@ texture = ExtResource( 4 )
 __meta__ = {
 "boxes_side_bottom": true,
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
@@ -38,6 +40,7 @@ texture = ExtResource( 4 )
 __meta__ = {
 "boxes_side_bottom": true,
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
@@ -47,6 +50,7 @@ scale = Vector2( 1.37982, 2.64258 )
 texture = ExtResource( 5 )
 __meta__ = {
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "clone"
 }
 
@@ -56,6 +60,7 @@ scale = Vector2( 1.46311, 3.80952 )
 texture = ExtResource( 5 )
 __meta__ = {
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "clone"
 }
 
@@ -65,11 +70,12 @@ scale = Vector2( 1.46311, 3.80952 )
 texture = ExtResource( 5 )
 __meta__ = {
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "clone"
 }
 
 [node name="moving_platform2" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 370, 660 )
+position = Vector2( 375.169, 658.708 )
 scale = Vector2( 1.03261, 2.46429 )
 texture = ExtResource( 6 )
 __meta__ = {
@@ -80,6 +86,7 @@ __meta__ = {
 "boxes_texture_top": ExtResource( 7 ),
 "boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
@@ -94,6 +101,7 @@ __meta__ = {
 "boxes_side_top": true,
 "boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
@@ -109,6 +117,7 @@ __meta__ = {
 "boxes_texture_top": ExtResource( 7 ),
 "boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
@@ -124,13 +133,15 @@ __meta__ = {
 "boxes_texture_top": ExtResource( 7 ),
 "boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
 [node name="test" type="Node2D" parent="P2DPerspectiveNode"]
 position = Vector2( 1360, 90 )
 __meta__ = {
-"p2d_canvas_mode": "clone"
+"p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode")
 }
 
 [node name="second_level_sprite" type="Sprite" parent="P2DPerspectiveNode/test"]
@@ -138,13 +149,16 @@ position = Vector2( 330, 198 )
 texture = ExtResource( 4 )
 __meta__ = {
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
 [node name="test2" type="Node2D" parent="P2DPerspectiveNode/test/second_level_sprite"]
+editor/display_folded = true
 position = Vector2( -430, -220 )
 __meta__ = {
-"p2d_canvas_mode": "clone"
+"p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode")
 }
 
 [node name="deeper_level_sprite" type="Sprite" parent="P2DPerspectiveNode/test/second_level_sprite/test2"]
@@ -152,13 +166,15 @@ position = Vector2( 490, 290 )
 texture = ExtResource( 4 )
 __meta__ = {
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
 [node name="test3" type="Node2D" parent="P2DPerspectiveNode/test/second_level_sprite/test2/deeper_level_sprite"]
 position = Vector2( -490, -290 )
 __meta__ = {
-"p2d_canvas_mode": "clone"
+"p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode")
 }
 
 [node name="even_deeper_level_sprite" type="Sprite" parent="P2DPerspectiveNode/test/second_level_sprite/test2/deeper_level_sprite/test3"]
@@ -166,6 +182,7 @@ position = Vector2( 330, 502 )
 texture = ExtResource( 4 )
 __meta__ = {
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes"
 }
 
@@ -174,6 +191,7 @@ position = Vector2( 720, 340.376 )
 texture = ExtResource( 4 )
 __meta__ = {
 "p2d_canvas_mode": "clone",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@5/@@6/@@14/@@16/@@20/@@24/@@25/@@26/@@42/@@43/@@52/@@53/@@5083/@@4945/@@4946/@@4947/@@4948/@@4949/example/P2DPerspectiveNode"),
 "p2d_mode": "none"
 }
 
@@ -204,18 +222,18 @@ look at the gap bellow,
  if we are not gonna see it why draw it?"
 
 [node name="lbl_label3" type="Label" parent="."]
-margin_left = 880.0
-margin_top = 210.0
-margin_right = 1127.0
-margin_bottom = 326.0
+margin_left = 920.897
+margin_top = 296.339
+margin_right = 1362.9
+margin_bottom = 335.339
 text = "Clone projection
 It looks better on with some sprites. can be changed in the inspector"
 
 [node name="lbl_label4" type="Label" parent="."]
-margin_left = 1640.0
+margin_left = 1638.0
 margin_top = 180.0
-margin_right = 2082.0
-margin_bottom = 296.0
+margin_right = 1837.0
+margin_bottom = 207.0
 text = "Deeply nested sprites"
 
 [node name="lbl_label5" type="Label" parent="."]
@@ -226,7 +244,6 @@ margin_bottom = 304.0
 text = "Specific excluded sprite"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-editor/display_folded = true
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 margin_left = 10.0
