@@ -14,6 +14,7 @@ export(int,10) var ProjectionDistanceStep=2
 #Projection mode 
 #Modo de Proyeccion
 export(String,"boxes","clone") var ProjectionMode="boxes" setget setProjectionMode
+export(bool) var ProjectionRepeat=true
 
 #self explanatory
 export(Color) var ProjectionLineColor=Color(0,1,0,0.5)
@@ -40,7 +41,6 @@ func _ready():
 	propagate_call("set_meta",["p2d_canvas_name",get_path()])
 	find_working_childs()
 	get_tree().connect("node_added",self,"scene_tree_listener",["add"])
-	get_tree().connect("node_removed",self,"scene_tree_listener",["remove"])
 
 func _process(delta):
 	update()
@@ -48,14 +48,14 @@ func _process(delta):
 func scene_tree_listener(node,action):
 	var update_childs=false
 	if action=="add" && node.is_class("Sprite"):
-		propagate_call("add_to_group",["p2d_canvas_child"])
-		propagate_call("set_meta",["p2d_canvas_mode",ProjectionMode])
-		propagate_call("set_meta",["p2d_canvas_name",get_name()])
-		update_childs=true
-	if action=="remove" && node.is_in_group("p2d_canvas_child"):
-		update_childs=true 
-	if update_childs:
-		find_working_childs()
+		var parent=node.get_parent()
+		if parent!=null:
+			if parent.is_in_group("p2d_canvas_child"):
+				node.add_to_group("p2d_canvas_child")
+				node.set_meta("p2d_canvas_mode",ProjectionMode)
+				node.set_meta("p2d_canvas_name",get_name())
+				node.set_meta("boxes_repeat",ProjectionRepeat)
+				working_childs.append(node)
 
 func find_working_childs():
 	working_childs.clear()
@@ -64,7 +64,6 @@ func find_working_childs():
 	for cc in get_tree().get_nodes_in_group("p2d_canvas_child"):
 		if cc.is_class("Sprite"):
 			working_childs.append(cc)
-	print("Found ",working_childs.size()," children to work with :D")
 
 func _draw():
 	#clear list
@@ -84,7 +83,16 @@ func _draw():
 
 	var final_group=""
 	var in_view=[]
-	for cc in working_childs:
+	
+	for widx in range(0,working_childs.size()):
+		var cc=working_childs[widx]
+		if cc!=null:
+			if !cc.is_inside_tree():#deleted child, remove for working group 
+				working_childs.remove(widx)
+				return
+		else:
+			working_childs.remove(widx)
+			return
 		#print(cc," ->",cc.get_groups()) 
 		var child_rect=cc.get_rect()
 		
@@ -163,14 +171,16 @@ func get_child_rect(child,child_rect,rot,center):
 		var parent_offset=Vector2(0,0)
 		for p in range(0,relative_path.get_name_count()-1):
 			curr_parent=str(curr_parent,"/",relative_path.get_name(p))
-			var parent=get_node(curr_parent)
-			if parent.has_method("get_position"):
-				parent_offset+=parent.get_position()
+			var parent=get_node_or_null(curr_parent)
+			if parent!=null:
+				if parent.has_method("get_position"):
+					parent_offset+=parent.get_position()
 		rect_p1+=parent_offset
 		rect_p2+=parent_offset
 		rect_p3+=parent_offset
 		rect_p4+=parent_offset
 		rect_center+=parent_offset
+		
 	var result={
 		"p1":rect_p1,
 		"p2":rect_p2,
@@ -194,7 +204,6 @@ func get_child_rect(child,child_rect,rot,center):
 func mode_boxes(sp,rect,center):	
 	var pols=[]
 	var to_draw=[]
-#	var rect=get_child_rect(sp,child_rect,sp.get_rotation())
 
 	if rect["p1"].y<center.y:
 		if sp.__meta__.get("boxes_side_left",true):
@@ -215,14 +224,34 @@ func mode_boxes(sp,rect,center):
 	var proj_p2=rect["p2"].linear_interpolate(center,float(ProjectionDistance)/100)
 	var proj_p3=rect["p3"].linear_interpolate(center,float(ProjectionDistance)/100)
 	var proj_p4=rect["p4"].linear_interpolate(center,float(ProjectionDistance)/100)
+	var side_textures=sp.__meta__.get("side_texture",sp.get_texture().duplicate())
+	sp.set_meta("side_texture",side_textures)
 	
-	var textures=[sp.get_texture(),sp.get_texture(),sp.get_texture(),sp.get_texture()]
+	var tex_uv_w=1
+	
+	var textures=[side_textures,side_textures,side_textures,side_textures]
 	
 	if sp.has_meta("boxes_texture_top"):
 		textures[0]=sp.get_meta("boxes_texture_top")
+		
 	if sp.has_meta("boxes_texture_bottom"):
 		textures[1]=sp.get_meta("boxes_texture_bottom")
 	
+	if sp.__meta__.get("boxes_repeat",ProjectionRepeat):
+		#every 10 is a whole texture...
+		tex_uv_w=ProjectionDistance/10
+		for ti in range(0,textures.size()):
+			if !textures[ti].get_flags()&Texture.FLAG_REPEAT:
+				textures[ti].set_flags(textures[ti].get_flags()|Texture.FLAG_REPEAT)
+	
+	var uvs=[
+		[Vector2(0,0),Vector2(1,0),Vector2(1,tex_uv_w),Vector2(0,tex_uv_w)],
+		[Vector2(0,0),Vector2(1,0),Vector2(1,tex_uv_w),Vector2(0,1)],
+		[Vector2(0,0),Vector2(tex_uv_w,0),Vector2(tex_uv_w,1),Vector2(0,1)],
+		[Vector2(0,0),Vector2(tex_uv_w,0),Vector2(tex_uv_w,1),Vector2(0,1)]
+	]
+	
+		
 	#top
 	pols.append([proj_p1,proj_p2,rect["p2"],rect["p1"]])
 	#bottom
@@ -233,17 +262,17 @@ func mode_boxes(sp,rect,center):
 	pols.append([rect["p2"],proj_p2,proj_p3,rect["p3"]])
 
 	for p in to_draw:
-		draw_elements.append({"func":"draw_polygon","params":[pols[p],[],[Vector2(0,0),Vector2(1,0),Vector2(1,1),Vector2(0,1)],textures[p],null,true]})
+		
+		draw_elements.append({"func":"draw_polygon","params":[pols[p],[],uvs[p],textures[p],sp.get_normal_map(),true]})
 		
 
 func mode_clone(sp,rect,center):	
 	var rot=sp.get_rotation()
-	#var rect=get_child_rect(sp,child_rect,rot)
-
+		
 	if rot!=0:
 		for dc in range(0,ProjectionDistance,ProjectionDistanceStep):
 			var dc_range=(float(ProjectionDistance)/100)-(float(dc)/100)
-			draw_elements.append({"func":"draw_polygon","params":[[rect["p1"].linear_interpolate(center,dc_range),rect["p2"].linear_interpolate(center,dc_range),rect["p3"].linear_interpolate(center,dc_range),rect["p4"].linear_interpolate(center,dc_range)],[],[Vector2(0,0),Vector2(1,0),Vector2(1,1),Vector2(0,1)],sp.get_texture(),null,true]})
+			draw_elements.append({"func":"draw_polygon","params":[[rect["p1"].linear_interpolate(center,dc_range),rect["p2"].linear_interpolate(center,dc_range),rect["p3"].linear_interpolate(center,dc_range),rect["p4"].linear_interpolate(center,dc_range)],[],[Vector2(0,0),Vector2(1,0),Vector2(1,1),Vector2(0,1)],sp.get_texture(),sp.get_normal_map(),true]})
 	else:
 		for dc in range(0,ProjectionDistance,ProjectionDistanceStep):
 			var dc_range=(float(ProjectionDistance)/100)-(float(dc)/100)

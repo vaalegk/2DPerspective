@@ -19,10 +19,16 @@ config/name="2DPerspective"
 run/main_scene="res://example.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+
 [editor_plugins]
 
 enabled=PoolStringArray( "p2d_perspective" )
 
 [rendering]
 
+environment/default_clear_color=Color( 0.0980392, 0.12549, 0.192157, 1 )
 environment/default_environment="res://default_env.tres"

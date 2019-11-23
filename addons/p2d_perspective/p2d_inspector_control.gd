@@ -26,7 +26,7 @@ func set_edit_target(object):
 		boxchild.set_pressed(draw)
 		
 		boxchild.connect("pressed",self,"control_change",[boxchild,"boxes"])
-		
+	
 	for boxchild in get_node("gc3").get_children():
 		if boxchild.is_class("MenuButton"):
 			boxchild.get_popup().connect("id_pressed",self,"tex_option",[boxchild])
@@ -39,6 +39,9 @@ func change_mode(item_id):
 	edit_target.set_meta("p2d_mode",p2d_modes[item_id])
 	for boxchild in get_node("gc2").get_children():
 		boxchild.set_disabled(p2d_modes[item_id]!="boxes")
+	for boxchild in get_node("gc3").get_children():
+		if boxchild.has_method("set_disabled"):
+			boxchild.set_disabled(p2d_modes[item_id]!="boxes")
 
 func control_change(caller,type):
 	if type=="boxes":
@@ -55,8 +58,11 @@ func tex_option(id,target):
 			edit_target.set_meta(target.get_name(),null)
 
 func tex_update(target,text,icon):
-	print(text)
-	target.set_text(text)
+	target.set_text("")
+	var val_name=str("gc3/",target.get_name(),"_val")
+	var val_node=get_node(val_name)
+	if val_node:
+		val_node.set_text(text)
 	target.set_button_icon(icon)
 	
 func tex_selected(file,target):
@@ -64,4 +70,10 @@ func tex_selected(file,target):
 	tex_update(target,file,texture)
 	edit_target.set_meta(target.get_name(),texture)
 	edit_target.set_meta(str(target.get_name(),"_file"),file)
+
+func _draw():
+	var rect=get_rect()#bleh styling
+	rect.position-=Vector2(margin_left,margin_top)
+	draw_rect(rect,Color(0,0,0,0.5),true)
+	
 	
