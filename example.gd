@@ -10,7 +10,6 @@ var move={
 	"down":false
 }
 
-	
 func _process(delta):
 	move["down"]=Input.is_action_pressed("ui_down")
 	move["up"]=Input.is_action_pressed("ui_up")

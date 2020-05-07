@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://example.gd" type="Script" id=1]
 [ext_resource path="res://addons/p2d_perspective/p2d_perspective_node.gd" type="Script" id=2]
@@ -7,22 +7,36 @@
 [ext_resource path="res://assets/moving_platform.png" type="Texture" id=5]
 [ext_resource path="res://assets/moving_platform_box.png" type="Texture" id=6]
 [ext_resource path="res://assets/moving_platform_box_top.png" type="Texture" id=7]
+[ext_resource path="res://assets/p2d_icon_big.png" type="Texture" id=8]
 
-[sub_resource type="StreamTexture" id=1]
-flags = 6
-load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+[sub_resource type="Animation" id=1]
+resource_name = "movestuff"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("P2DPerspectiveNode/icon:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 90.0, 180.0, 270.0, 360.0 ]
+}
 
 [sub_resource type="StreamTexture" id=2]
 flags = 6
-load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+load_path = "res://.import/p2d_icon_big.png-2b04f4e2ebb6c0c41f83968c9fbfcec6.stex"
 
 [sub_resource type="StreamTexture" id=3]
 flags = 6
-load_path = "res://.import/moving_platform_box.png-cb2f3aba2e0aab1919645a398d711c9e.stex"
+load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
 
 [sub_resource type="StreamTexture" id=4]
 flags = 6
-load_path = "res://.import/moving_platform_box.png-cb2f3aba2e0aab1919645a398d711c9e.stex"
+load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
 
 [sub_resource type="StreamTexture" id=5]
 flags = 6
@@ -33,34 +47,46 @@ flags = 6
 load_path = "res://.import/moving_platform_box.png-cb2f3aba2e0aab1919645a398d711c9e.stex"
 
 [sub_resource type="StreamTexture" id=7]
-flags = 4
-load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+flags = 6
+load_path = "res://.import/moving_platform_box.png-cb2f3aba2e0aab1919645a398d711c9e.stex"
 
 [sub_resource type="StreamTexture" id=8]
-flags = 4
-load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+flags = 6
+load_path = "res://.import/moving_platform_box.png-cb2f3aba2e0aab1919645a398d711c9e.stex"
 
 [sub_resource type="StreamTexture" id=9]
 flags = 4
 load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
 
 [sub_resource type="StreamTexture" id=10]
-flags = 6
+flags = 4
+load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+
+[sub_resource type="StreamTexture" id=11]
+flags = 4
 load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
 
 [sub_resource type="StreamTexture" id=12]
 flags = 6
 load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
 
-[sub_resource type="StreamTexture" id=11]
+[sub_resource type="StreamTexture" id=13]
 flags = 6
 load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StreamTexture" id=14]
+flags = 6
+load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+
+[sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0.0156863, 0.027451, 0.0588235, 0.305882 )
 
 [node name="example" type="Node2D"]
 script = ExtResource( 1 )
+
+[node name="anims" type="AnimationPlayer" parent="."]
+autoplay = "movestuff"
+anims/movestuff = SubResource( 1 )
 
 [node name="P2DPerspectiveNode" type="Node2D" parent="."]
 script = ExtResource( 2 )
@@ -70,15 +96,35 @@ __meta__ = {
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode")
 }
-ProjectionDistance = 30
+ProjectionDistance = 40
 ProjectionDistanceStep = 5
-ProjectionLineColor = Color( 0, 0.423529, 0.607843, 0.207843 )
+ProjectionRepeatDivider = 8
+ProjectionLineColor = Color( 0, 0.592157, 0.85098, 0.396078 )
 ShowProjectionLines = true
-VPColorFade = Color( 0.25098, 0.25098, 0.25098, 1 )
-colorDepth = 30
+VPColorFade = Color( 0.145098, 0.145098, 0.145098, 1 )
+colorDepth = 35
+
+[node name="p2d_icon_big" type="Sprite" parent="P2DPerspectiveNode"]
+self_modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 644.366, 598.408 )
+texture = ExtResource( 8 )
+__meta__ = {
+"boxes_repeat": true,
+"boxes_side_bottom": false,
+"boxes_side_left": false,
+"boxes_side_right": false,
+"boxes_side_top": false,
+"p2d_canvas_mode": "boxes",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
+"p2d_mode": "boxes",
+"p2d_start_projection": 16.0,
+"side_texture": SubResource( 2 )
+}
 
 [node name="icon" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 77.6482, 527.618 )
+self_modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 97.7741, 513.958 )
+rotation = 6.28319
 texture = ExtResource( 4 )
 __meta__ = {
 "boxes_repeat": true,
@@ -86,7 +132,8 @@ __meta__ = {
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"side_texture": SubResource( 1 )
+"p2d_start_projection": 24.0,
+"side_texture": SubResource( 3 )
 }
 
 [node name="icon2" type="Sprite" parent="P2DPerspectiveNode"]
@@ -98,12 +145,12 @@ __meta__ = {
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"side_texture": SubResource( 2 )
+"side_texture": SubResource( 4 )
 }
 
 [node name="moving_platform" type="Sprite" parent="P2DPerspectiveNode"]
 self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 1020, 540 )
+position = Vector2( 1083.62, 540 )
 scale = Vector2( 1.37982, 2.64258 )
 texture = ExtResource( 5 )
 __meta__ = {
@@ -114,19 +161,8 @@ __meta__ = {
 "p2d_start_projection": 10.0
 }
 
-[node name="moving_platform4" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 1278.08, 490 )
-scale = Vector2( 1.46311, 3.80952 )
-texture = ExtResource( 5 )
-__meta__ = {
-"boxes_repeat": true,
-"p2d_canvas_mode": "boxes",
-"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
-"p2d_mode": "clone"
-}
-
 [node name="moving_platform5" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 1278.08, 490 )
+position = Vector2( 1361.07, 507.923 )
 scale = Vector2( 1.46311, 3.80952 )
 texture = ExtResource( 5 )
 __meta__ = {
@@ -137,42 +173,7 @@ __meta__ = {
 }
 
 [node name="moving_platform2" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 346.737, 657.416 )
-scale = Vector2( 1.03261, 2.46429 )
-texture = ExtResource( 6 )
-__meta__ = {
-"boxes_repeat": true,
-"boxes_side_bottom": false,
-"boxes_side_left": true,
-"boxes_side_right": true,
-"boxes_side_top": true,
-"boxes_texture_top": ExtResource( 7 ),
-"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
-"p2d_canvas_mode": "boxes",
-"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
-"p2d_mode": "boxes",
-"side_texture": SubResource( 3 )
-}
-
-[node name="moving_platform6" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( -80, 490 )
-scale = Vector2( 1.03261, 2.46429 )
-texture = ExtResource( 6 )
-__meta__ = {
-"boxes_repeat": true,
-"boxes_side_bottom": true,
-"boxes_side_left": true,
-"boxes_side_right": true,
-"boxes_side_top": true,
-"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
-"p2d_canvas_mode": "boxes",
-"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
-"p2d_mode": "boxes",
-"side_texture": SubResource( 4 )
-}
-
-[node name="moving_platform3" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 563.643, 697.771 )
+position = Vector2( 430.804, 668.776 )
 scale = Vector2( 1.03261, 2.46429 )
 texture = ExtResource( 6 )
 __meta__ = {
@@ -189,8 +190,43 @@ __meta__ = {
 "side_texture": SubResource( 5 )
 }
 
+[node name="moving_platform6" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( -80, 490 )
+scale = Vector2( 1.03261, 2.46429 )
+texture = ExtResource( 6 )
+__meta__ = {
+"boxes_repeat": true,
+"boxes_side_bottom": true,
+"boxes_side_left": true,
+"boxes_side_right": true,
+"boxes_side_top": true,
+"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
+"p2d_canvas_mode": "boxes",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
+"p2d_mode": "boxes",
+"side_texture": SubResource( 6 )
+}
+
+[node name="moving_platform3" type="Sprite" parent="P2DPerspectiveNode"]
+position = Vector2( 648.827, 731.739 )
+scale = Vector2( 1.03261, 2.46429 )
+texture = ExtResource( 6 )
+__meta__ = {
+"boxes_repeat": true,
+"boxes_side_bottom": false,
+"boxes_side_left": true,
+"boxes_side_right": true,
+"boxes_side_top": true,
+"boxes_texture_top": ExtResource( 7 ),
+"boxes_texture_top_file": "res://assets/moving_platform_box_top.png",
+"p2d_canvas_mode": "boxes",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
+"p2d_mode": "boxes",
+"side_texture": SubResource( 7 )
+}
+
 [node name="moving_platform7" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 770, 660 )
+position = Vector2( 840.434, 660 )
 scale = Vector2( 1.03261, 2.46429 )
 texture = ExtResource( 6 )
 __meta__ = {
@@ -204,7 +240,7 @@ __meta__ = {
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"side_texture": SubResource( 6 )
+"side_texture": SubResource( 8 )
 }
 
 [node name="test" type="Node2D" parent="P2DPerspectiveNode"]
@@ -219,10 +255,13 @@ position = Vector2( 343.566, 198 )
 texture = ExtResource( 4 )
 __meta__ = {
 "boxes_repeat": true,
+"boxes_side_bottom": true,
+"boxes_side_top": true,
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"side_texture": SubResource( 7 )
+"p2d_start_projection": 0.0,
+"side_texture": SubResource( 9 )
 }
 
 [node name="test2" type="Node2D" parent="P2DPerspectiveNode/test/second_level_sprite"]
@@ -240,7 +279,7 @@ __meta__ = {
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"side_texture": SubResource( 8 )
+"side_texture": SubResource( 10 )
 }
 
 [node name="test3" type="Node2D" parent="P2DPerspectiveNode/test/second_level_sprite/test2/deeper_level_sprite"]
@@ -258,7 +297,7 @@ __meta__ = {
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"side_texture": SubResource( 9 )
+"side_texture": SubResource( 11 )
 }
 
 [node name="excluded" type="Sprite" parent="P2DPerspectiveNode"]
@@ -280,14 +319,13 @@ __meta__ = {
 "p2d_canvas_mode": "boxes",
 "p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"p2d_start_projection": 10.0,
-"side_texture": SubResource( 10 )
+"p2d_start_projection": 16.0,
+"side_texture": SubResource( 12 )
 }
 
 [node name="icon5" type="Sprite" parent="P2DPerspectiveNode"]
 self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 500, 836.058 )
-scale = Vector2( 1.38367, 1.26251 )
+position = Vector2( 206.811, 589.74 )
 texture = ExtResource( 4 )
 __meta__ = {
 "boxes_repeat": true,
@@ -296,22 +334,21 @@ __meta__ = {
 "boxes_side_right": false,
 "boxes_side_top": false,
 "p2d_canvas_mode": "boxes",
-"p2d_canvas_name": "P2DPerspectiveNode",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"p2d_start_projection": 30.0,
-"side_texture": SubResource( 12 )
+"p2d_start_projection": 40.0,
+"side_texture": SubResource( 13 )
 }
 
 [node name="icon3" type="Sprite" parent="P2DPerspectiveNode"]
-position = Vector2( 500, 919.27 )
-scale = Vector2( 1.38367, 1.26251 )
+position = Vector2( 206.811, 654.935 )
 texture = ExtResource( 4 )
 __meta__ = {
 "boxes_repeat": true,
 "p2d_canvas_mode": "boxes",
-"p2d_canvas_name": "P2DPerspectiveNode",
+"p2d_canvas_name": NodePath("/root/EditorNode/@@585/@@586/@@594/@@596/@@600/@@604/@@605/@@606/@@622/@@623/@@632/@@633/@@6278/@@6117/@@6118/@@6119/@@6120/@@6121/example/P2DPerspectiveNode"),
 "p2d_mode": "boxes",
-"side_texture": SubResource( 11 )
+"side_texture": SubResource( 14 )
 }
 
 [node name="camera" type="Camera2D" parent="."]
@@ -328,20 +365,20 @@ text = "Box Projection, default
 Not suitable for all sprites"
 
 [node name="lbl_label6" type="Label" parent="."]
-margin_left = 272.166
-margin_top = 667.648
-margin_right = 456.166
-margin_bottom = 698.648
+margin_left = 356.233
+margin_top = 676.736
+margin_right = 540.233
+margin_bottom = 707.736
 text = "Boxes:  Stretch mode"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="lbl_label8" type="Label" parent="."]
-margin_left = 120.364
-margin_top = 580.113
-margin_right = 304.364
-margin_bottom = 611.113
+margin_left = 46.479
+margin_top = 623.16
+margin_right = 175.479
+margin_bottom = 688.16
 text = "Boxes:  
 Projection Distance 
 
@@ -351,9 +388,9 @@ __meta__ = {
 }
 
 [node name="lbl_label9" type="Label" parent="."]
-margin_left = 941.165
+margin_left = 1000.24
 margin_top = 517.413
-margin_right = 1125.17
+margin_right = 1184.24
 margin_bottom = 582.413
 text = "Clone:  
 Projection Distance 
@@ -371,10 +408,11 @@ margin_bottom = 264.195
 text = "Boxes: Repeat Projection"
 
 [node name="lbl_label2" type="Label" parent="."]
-margin_left = 432.615
-margin_top = 425.122
-margin_right = 679.615
-margin_bottom = 541.122
+margin_left = 503.46
+margin_top = 429.644
+margin_right = 750.46
+margin_bottom = 545.644
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Box Projection, 
 You can overwrite the 
 top and bottom 
@@ -400,6 +438,19 @@ margin_top = 203.8
 margin_right = 1724.35
 margin_bottom = 230.8
 text = "Deeply nested sprites"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lbl_label10" type="Label" parent="."]
+margin_left = 1544.83
+margin_top = 745.351
+margin_right = 1743.83
+margin_bottom = 772.351
+text = "Sprite outside of p2d node"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="lbl_label5" type="Label" parent="."]
 margin_left = 665.074
@@ -413,7 +464,7 @@ text = "Excluded sprite"
 [node name="Panel" type="Panel" parent="CanvasLayer"]
 anchor_right = 1.0
 margin_bottom = 70.0
-custom_styles/panel = SubResource( 13 )
+custom_styles/panel = SubResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -436,3 +487,7 @@ margin_top = 13.0
 margin_right = 536.867
 margin_bottom = 30.0
 text = "0"
+
+[node name="p2d_icon_big" type="Sprite" parent="."]
+position = Vector2( 1618.95, 660.521 )
+texture = ExtResource( 8 )
