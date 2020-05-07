@@ -26,7 +26,7 @@ func _process(delta):
 	if move["right"]:
 		pos.x=500
 	if move["up"]:
-		pos.y=-500		
+		pos.y=-500
 	if move["down"]:
 		pos.y=500
 	
@@ -34,3 +34,5 @@ func _process(delta):
 		camera.position+=pos*delta
 	else:
 		p2d.VanishingPoint+=pos*delta
+	
+	get_node("CanvasLayer/Panel/fps").set_text(str(Engine.get_frames_per_second()," fps"))

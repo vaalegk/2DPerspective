@@ -14,9 +14,15 @@ func set_edit_target(object):
 		get_node("gc/op_mode").select(p2d_mode_trans[edit_target.get_meta("p2d_mode")])
 	else:
 		get_node("gc/op_mode").select(p2d_mode_trans[edit_target.get_meta("p2d_canvas_mode")])
-		
+	
+	get_node("gc/op_projection_start").value=edit_target.__meta__.get("p2d_start_projection",0)
+	
+	
 	change_mode(get_node("gc/op_mode").get_selected_id())
 	get_node("gc/op_mode").connect("item_selected",self,"change_mode")
+	
+	get_node("gc/op_projection_start").connect("value_changed",self,"projection_change")
+
 
 	for boxchild in get_node("gc2").get_children():
 		var draw=true
@@ -42,6 +48,13 @@ func change_mode(item_id):
 	for boxchild in get_node("gc3").get_children():
 		if boxchild.has_method("set_disabled"):
 			boxchild.set_disabled(p2d_modes[item_id]!="boxes")
+
+func projection_change(value):
+	edit_target.set_meta("p2d_start_projection",value)
+	if value>0:
+		edit_target.self_modulate.a=0
+	else:
+		edit_target.self_modulate.a=1
 
 func control_change(caller,type):
 	if type=="boxes":
