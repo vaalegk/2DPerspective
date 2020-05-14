@@ -45,7 +45,7 @@ func set_edit_target(object:Sprite):
 
 func reset_texture():
 	if (edit_target):  
-		edit_target.set_meta("side_texture",null)
+		edit_target.set_meta("p2d_side_texture",null)
 	
 func change_mode(item_id):
 	edit_target.set_meta("p2d_mode",p2d_modes[item_id])
